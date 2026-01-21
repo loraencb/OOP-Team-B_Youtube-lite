@@ -73,35 +73,74 @@ flowchart TB
 youtube-lite/
 ├── README.md              # Project overview and setup instructions
 ├── .gitignore             # Git ignored files
-├── .env                   # Environment variable template
+├── .env.example           # Environment variable template
 ├── requirements.txt       # Python dependencies
 │
 ├── src/
 │   └── app/
-│       ├── __init__.py    # Application factory
+│       ├── __init__.py   
 │       ├── config.py      # Application configuration
 │       ├── extensions.py  # Flask extensions (DB, auth, etc.)
 │       │
-│       ├── models/        # Database entities
-│       │   └── __init__.py
+│       ├── models/        # Database entities (DB Lead)
+│       │   ├── __init__.py
+│       │   ├── user.py
+│       │   ├── video.py
+│       │   ├── comment.py
+│       │   ├── like.py
+│       │   ├── subscription.py
+│       │   └── report.py
 │       │
 │       ├── services/      # Business logic layer
-│       │   └── __init__.py
+│       │   ├── __init__.py
+│       │   ├── auth/
+│       │   │   └── service.py
+│       │   ├── video/
+│       │   │   └── service.py
+│       │   ├── social/
+│       │   │   └── service.py
+│       │   └── admin/
+│       │       └── service.py
 │       │
 │       ├── routes/        # Controllers / web endpoints
-│       │   └── __init__.py
+│       │   ├── __init__.py
+│       │   ├── auth/
+│       │   │   └── routes.py
+│       │   ├── video/
+│       │   │   └── routes.py
+│       │   ├── social/
+│       │   │   └── routes.py
+│       │   └── admin/
+│       │       └── routes.py
 │       │
-│       ├── templates/     # HTML templates
-│       │   └── base.html
+│       ├── templates/     # HTML templates (UI Lead)
+│       │   ├── base.html
+│       │   ├── auth/
+│       │   ├── video/
+│       │   ├── admin/
+│       │   └── dashboard/
 │       │
 │       ├── static/        # CSS, JavaScript, images
-│       │   └── style.css
+│       │   ├── css/
+│       │   │   └── style.css
+│       │   ├── js/
+│       │   └── images/
 │       │
-│       └── utils/         # Helper utilities (RBAC, decorators)
-│           └── __init__.py
+│       └── utils/         # Helper utilities
+│           ├── __init__.py
+│           ├── rbac.py
+│           └── decorators.py
 │
-├── tests/
-│   └── test_smoke.py      # Basic application startup test
+├── tests/                 # QA / Testing
+│   ├── test_auth.py
+│   ├── test_video.py
+│   ├── test_social.py
+│   └── test_admin.py
+│
+├── scripts/               # Utility scripts
+│   ├── seed_db.py
+│   └── create_admin.py
 │
 └── run.py                 # Application entry point
+
 ```

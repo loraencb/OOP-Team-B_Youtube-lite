@@ -184,7 +184,7 @@ The project uses area-based ownership. Each teammate is responsible for a specif
 - src/app/utils/rbac.py
 - src/app/models/user.py
 
-### Teammate 3 - Database & Persistence
+### Mysara/Vinny - Database & Persistence
 
 **Areas:**
 - area: db
@@ -200,7 +200,7 @@ The project uses area-based ownership. Each teammate is responsible for a specif
 - src/migrations/
 - scripts/
 
-### Teammate 4 - Frontend / UI
+### Mysara/Vinny - Frontend / UI
 
 **Areas:**
 - area: ui

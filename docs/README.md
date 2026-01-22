@@ -167,7 +167,7 @@ The project uses area-based ownership. Each teammate is responsible for a specif
 - src/app/services/social/
 - src/app/models/video.py
 
-### Teammate 2 - Authentication & Roles
+### Kevin - Authentication & Roles
 
 **Areas:**
 - area: auth

@@ -148,7 +148,7 @@ youtube-lite/
 ## Teammate Area Ownership
 The project uses area-based ownership. Each teammate is responsible for a specific subsystem.
 
-### Teammate 1 - Video & Feed (Backend)
+### Braulio - Video & Feed (Backend)
 
 **Areas:**
 - area: video

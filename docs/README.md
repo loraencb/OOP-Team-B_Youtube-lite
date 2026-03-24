@@ -232,3 +232,161 @@ The project uses area-based ownership. Each teammate is responsible for a specif
 - src/app/routes/admin/
 - src/app/services/admin/
 - tests/
+
+# THIS IS WHAT I'VE DONE
+
+### Video Management
+- Create videos
+- Retrieve all videos
+- Retrieve a single video (auto-increments views)
+- Update video details
+- Delete videos
+
+### Social Features
+- Add comments to videos
+- Like / Unlike videos (toggle)
+- Subscribe to creators
+
+### Backend Architecture
+- Flask App Factory Pattern
+- SQLAlchemy ORM for database management
+- Service Layer abstraction
+- Blueprint-based routing
+- Modular file structure
+
+### Testing
+- Automated testing using **pytest**
+- In-memory SQLite database for isolated testing
+- Full API test coverage (9 tests passing)
+
+---
+
+## Project Structure
+
+```text
+OOP-Team-B_Youtube-lite/
+│
+├── run.py
+├── requirements.txt
+├── .gitignore
+│
+├── src/
+│ └── app/
+│ ├── init.py
+│ ├── config.py
+│ ├── extensions.py
+│ │
+│ ├── models/
+│ │ ├── user.py
+│ │ ├── video.py
+│ │ ├── comment.py
+│ │ ├── like.py
+│ │ └── subscription.py
+│ │
+│ ├── routes/
+│ │ ├── video/
+│ │ │ └── routes.py
+│ │ └── social/
+│ │ └── routes.py
+│ │
+│ └── services/
+│ ├── video/
+│ │ └── service.py
+│ └── social/
+│ └── service.py
+│
+└── tests/
+├── conftest.py
+├── test_video_routes.py
+└── test_social_routes.py
+```
+
+---
+
+## Setup Instructions
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/loraencb/OOP-Team-B_Youtube-lite.git
+```
+```bash
+cd OOP-Team-B_Youtube-lite
+```
+2. Create virtual environment
+
+**Windows**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+**Mac/Linux**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+4. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+5. Run the application
+```bash
+python run.py
+```
+Visit:
+
+http://127.0.0.1:5000/
+
+Running Tests
+```bash
+pytest
+```
+Expected output:
+9 passed
+
+API Endpoints
+**Videos**
+Method |Endpoint | Description
+GET |	/videos/ | Get all videos
+GET |	/videos/<id> | Get single video (increments views)
+POST | /videos/ |	Create video
+PUT | /videos/<id> | Update video
+DELETE | /videos/<id> | Delete video
+**Social**
+Method	Endpoint	Description
+POST	/social/comments	Add comment
+POST	/social/likes/toggle	Like/Unlike video
+POST	/social/subscribe	Subscribe to creator
+
+Example Request
+Create Video
+curl -X POST http://127.0.0.1:5000/videos/ \
+-H "Content-Type: application/json" \
+-d '{
+  "title": "Test Video",
+  "description": "Example",
+  "file_path": "/videos/test.mp4",
+  "creator_id": 1
+}'
+
+Technologies Used
+Python 3.12
+Flask
+Flask-SQLAlchemy
+SQLite
+Pytest
+
+## Current Status
+
+- Backend API fully functional
+- All tests passing
+- Modular architecture implemented
+- Frontend integration pending
+- Validation and enhancements in progress
+
+## Future Improvements
+Input validation (user/video existence checks)
+Comment listing per video
+Like and subscription counts
+Video feed endpoint
+Authentication system (login/register)
+File upload handling

@@ -1,0 +1,48 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.env/
+.env.*
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# SQLite database
+*.db
+*.sqlite3
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Build / dist
+build/
+dist/
+*.egg-info/
+
+# Jupyter (if used)
+.ipynb_checkpoints/
+
+# IDEs
+.idea/
+
+# Flask instance folder
+instance/
+
+# Temporary files
+*.tmp
+*.swp

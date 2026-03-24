@@ -14,9 +14,18 @@ def list_videos():
 
 @video_bp.route("/feed", methods=["GET"])
 def get_feed():
-    videos = VideoService.get_all_videos()
-    published_videos = [video.to_dict() for video in videos if video.is_published]
-    return jsonify(published_videos), 200
+    page = request.args.get("page", default=1, type=int)
+    limit = request.args.get("limit", default=10, type=int)
+    search = request.args.get("search", default=None, type=str)
+
+    if page < 1:
+        return jsonify({"error": "Page must be at least 1"}), 400
+
+    if limit < 1 or limit > 100:
+        return jsonify({"error": "Limit must be between 1 and 100"}), 400
+
+    feed_data = VideoService.get_feed(page=page, limit=limit, search=search)
+    return jsonify(feed_data), 200
 
 
 @video_bp.route("/creator/<int:user_id>", methods=["GET"])

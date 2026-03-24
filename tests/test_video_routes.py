@@ -95,11 +95,18 @@ def test_feed_endpoint(auth_client):
 
     response = auth_client.get("/videos/feed")
     assert response.status_code == 200
+
     data = response.get_json()
-    assert isinstance(data, list)
-    assert len(data) >= 1
-    assert "like_count" in data[0]
-    assert "comment_count" in data[0]
+    assert "page" in data
+    assert "limit" in data
+    assert "total" in data
+    assert "pages" in data
+    assert "results" in data
+
+    assert isinstance(data["results"], list)
+    assert len(data["results"]) >= 1
+    assert "like_count" in data["results"][0]
+    assert "comment_count" in data["results"][0]
 
 
 def test_get_video_stats(auth_client):
@@ -218,3 +225,53 @@ def test_cannot_delete_other_users_video(client):
     response = client.delete(f"/videos/{video_id}")
     assert response.status_code == 403
     assert response.get_json()["error"] == "You can only delete your own videos"
+
+def test_feed_pagination(auth_client):
+    for i in range(15):
+        auth_client.post("/videos/", json={
+            "title": f"Video {i}",
+            "description": f"Description {i}",
+            "file_path": f"/videos/{i}.mp4"
+        })
+
+    response = auth_client.get("/videos/feed?page=1&limit=5")
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["page"] == 1
+    assert data["limit"] == 5
+    assert data["total"] >= 15
+    assert len(data["results"]) == 5
+
+
+def test_feed_search(auth_client):
+    auth_client.post("/videos/", json={
+        "title": "Python Tutorial",
+        "description": "Learn Flask backend",
+        "file_path": "/videos/python.mp4"
+    })
+
+    auth_client.post("/videos/", json={
+        "title": "Cooking Video",
+        "description": "Make pasta",
+        "file_path": "/videos/cooking.mp4"
+    })
+
+    response = auth_client.get("/videos/feed?search=Python")
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["total"] >= 1
+    assert any("Python" in video["title"] for video in data["results"])
+
+
+def test_feed_invalid_page(client):
+    response = client.get("/videos/feed?page=0&limit=10")
+    assert response.status_code == 400
+    assert response.get_json()["error"] == "Page must be at least 1"
+
+
+def test_feed_invalid_limit(client):
+    response = client.get("/videos/feed?page=1&limit=101")
+    assert response.status_code == 400
+    assert response.get_json()["error"] == "Limit must be between 1 and 100"

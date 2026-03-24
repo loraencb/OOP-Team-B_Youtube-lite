@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from ...extensions import db
 from ...models.video import Video
 from ...models.user import User
@@ -35,8 +36,35 @@ class VideoService:
         if not user:
             return None, "User not found"
 
-        videos = Video.query.filter_by(creator_id=user_id).order_by(Video.created_at.desc()).all()
+        videos = Video.query.filter_by(
+            creator_id=user_id
+        ).order_by(Video.created_at.desc()).all()
         return videos, None
+
+    @staticmethod
+    def get_feed(page=1, limit=10, search=None):
+        query = Video.query.filter_by(is_published=True)
+
+        if search:
+            search_term = f"%{search}%"
+            query = query.filter(
+                or_(
+                    Video.title.ilike(search_term),
+                    Video.description.ilike(search_term),
+                )
+            )
+
+        query = query.order_by(Video.created_at.desc())
+
+        pagination = query.paginate(page=page, per_page=limit, error_out=False)
+
+        return {
+            "page": page,
+            "limit": limit,
+            "total": pagination.total,
+            "pages": pagination.pages,
+            "results": [video.to_dict() for video in pagination.items],
+        }
 
     @staticmethod
     def increment_views(video):

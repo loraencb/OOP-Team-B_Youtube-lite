@@ -1,3 +1,5 @@
+import io
+
 def test_home_route(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -275,3 +277,25 @@ def test_feed_invalid_limit(client):
     response = client.get("/videos/feed?page=1&limit=101")
     assert response.status_code == 400
     assert response.get_json()["error"] == "Limit must be between 1 and 100"
+
+
+def test_upload_video(auth_client):
+    video_data = io.BytesIO(b"fake video content")
+    thumb_data = io.BytesIO(b"fake image content")
+
+    response = auth_client.post(
+        "/videos/upload",
+        data={
+            "title": "Upload Test",
+            "description": "Testing file upload",
+            "video": (video_data, "test.mp4"),
+            "thumbnail": (thumb_data, "thumb.jpg"),
+        },
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 201
+    data = response.get_json()
+    assert data["title"] == "Upload Test"
+    assert data["video_url"] is not None
+    assert data["thumbnail_url"] is not None

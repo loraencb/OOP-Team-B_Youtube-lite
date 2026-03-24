@@ -1,4 +1,5 @@
 from datetime import datetime, UTC
+import os
 from ..extensions import db
 
 
@@ -33,12 +34,16 @@ class Video(db.Model):
     )
 
     def to_dict(self):
+        filename = os.path.basename(self.file_path) if self.file_path else None
+        thumbnail = os.path.basename(self.thumbnail_path) if self.thumbnail_path else None
+
         return {
             "id": self.id,
             "title": self.title,
             "description": self.description,
             "file_path": self.file_path,
-            "thumbnail_path": self.thumbnail_path,
+            "video_url": f"/videos/files/videos/{filename}" if filename else None,
+            "thumbnail_url": f"/videos/files/thumbnails/{thumbnail}" if thumbnail else None,
             "creator_id": self.creator_id,
             "views": self.views,
             "is_published": self.is_published,

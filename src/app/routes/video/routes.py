@@ -1,5 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app, send_from_directory
 from flask_login import login_required, current_user
+import os
+from ...utils.file_handler import save_file, allowed_file, ALLOWED_VIDEO_EXTENSIONS, ALLOWED_IMAGE_EXTENSIONS
 from ...services.video.service import VideoService
 from ...services.social.service import SocialService
 
@@ -10,6 +12,30 @@ video_bp = Blueprint("video", __name__, url_prefix="/videos")
 def list_videos():
     videos = VideoService.get_all_videos()
     return jsonify([video.to_dict() for video in videos]), 200
+
+@video_bp.route("/", methods=["POST"])
+@login_required
+def create_video():
+    data = request.get_json()
+
+    title = data.get("title")
+    description = data.get("description")
+    file_path = data.get("file_path")
+
+    if not title or not file_path:
+        return jsonify({"error": "Title and file_path required"}), 400
+
+    video, error = VideoService.create_video(
+        title=title,
+        description=description,
+        file_path=file_path,
+        creator_id=current_user.id,
+    )
+
+    if error:
+        return jsonify({"error": error}), 404
+
+    return jsonify(video.to_dict()), 201
 
 
 @video_bp.route("/feed", methods=["GET"])
@@ -58,22 +84,49 @@ def get_video_stats(video_id):
     return jsonify(stats), 200
 
 
-@video_bp.route("/", methods=["POST"])
+@video_bp.route("/upload", methods=["POST"])
 @login_required
-def create_video():
-    data = request.get_json() or {}
+def upload_video():
+    if "video" not in request.files:
+        return jsonify({"error": "Video file is required"}), 400
 
-    required_fields = ["title", "file_path"]
-    missing = [field for field in required_fields if field not in data]
+    video_file = request.files["video"]
+    thumbnail_file = request.files.get("thumbnail")
 
-    if missing:
-        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+    title = request.form.get("title")
+    description = request.form.get("description")
+
+    if not title:
+        return jsonify({"error": "Title is required"}), 400
+
+    # Validate video
+    if not allowed_file(video_file.filename, ALLOWED_VIDEO_EXTENSIONS):
+        return jsonify({"error": "Invalid video format"}), 400
+
+    video_path, err = save_file(
+        video_file,
+        current_app.config["VIDEO_UPLOAD_FOLDER"]
+    )
+    if err:
+        return jsonify({"error": err}), 400
+
+    thumbnail_path = None
+    if thumbnail_file:
+        if not allowed_file(thumbnail_file.filename, ALLOWED_IMAGE_EXTENSIONS):
+            return jsonify({"error": "Invalid thumbnail format"}), 400
+
+        thumbnail_path, err = save_file(
+            thumbnail_file,
+            current_app.config["THUMBNAIL_UPLOAD_FOLDER"]
+        )
+        if err:
+            return jsonify({"error": err}), 400
 
     video, error = VideoService.create_video(
-        title=data["title"],
-        description=data.get("description"),
-        file_path=data["file_path"],
-        thumbnail_path=data.get("thumbnail_path"),
+        title=title,
+        description=description,
+        file_path=video_path,
+        thumbnail_path=thumbnail_path,
         creator_id=current_user.id,
     )
 
@@ -116,3 +169,18 @@ def delete_video(video_id):
 
     VideoService.delete_video(video)
     return jsonify({"message": "Video deleted"}), 200
+
+@video_bp.route("/files/videos/<filename>")
+def serve_video(filename):
+    return send_from_directory(
+        current_app.config["VIDEO_UPLOAD_FOLDER"],
+        filename
+    )
+
+
+@video_bp.route("/files/thumbnails/<filename>")
+def serve_thumbnail(filename):
+    return send_from_directory(
+        current_app.config["THUMBNAIL_UPLOAD_FOLDER"],
+        filename
+    )

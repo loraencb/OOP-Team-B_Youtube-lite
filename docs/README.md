@@ -312,7 +312,7 @@ git clone https://github.com/loraencb/OOP-Team-B_Youtube-lite.git
 ```bash
 cd OOP-Team-B_Youtube-lite
 ```
-2. Create virtual environment
+### 2. Create virtual environment
 
 **Windows**
 ```bash
@@ -324,11 +324,11 @@ venv\Scripts\activate
 python3 -m venv venv
 source venv/bin/activate
 ```
-4. Install dependencies
+### 4. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
-5. Run the application
+### 5. Run the application
 ```bash
 python run.py
 ```
@@ -343,21 +343,21 @@ pytest
 Expected output:
 9 passed
 
-API Endpoints
-**Videos**
+### API Endpoints
+**Videos**\n
 Method |Endpoint | Description
 GET |	/videos/ | Get all videos
 GET |	/videos/<id> | Get single video (increments views)
 POST | /videos/ |	Create video
 PUT | /videos/<id> | Update video
 DELETE | /videos/<id> | Delete video
-**Social**
+**Social**\n
 Method	Endpoint	Description
 POST	/social/comments	Add comment
 POST	/social/likes/toggle	Like/Unlike video
 POST	/social/subscribe	Subscribe to creator
 
-Example Request
+### Example Request
 Create Video
 curl -X POST http://127.0.0.1:5000/videos/ \
 -H "Content-Type: application/json" \
@@ -368,7 +368,7 @@ curl -X POST http://127.0.0.1:5000/videos/ \
   "creator_id": 1
 }'
 
-Technologies Used
+### Technologies Used
 Python 3.12
 Flask
 Flask-SQLAlchemy

@@ -89,3 +89,74 @@ def test_delete_video(client):
 
     get_response = client.get(f"/videos/{video_id}")
     assert get_response.status_code == 404
+
+def test_feed_endpoint(client):
+    client.post("/videos/", json={
+        "title": "Feed Video",
+        "description": "For feed",
+        "file_path": "/videos/feed.mp4",
+        "creator_id": 1
+    })
+
+    response = client.get("/videos/feed")
+    assert response.status_code == 200
+    data = response.get_json()
+    assert isinstance(data, list)
+    assert len(data) >= 1
+    assert "like_count" in data[0]
+    assert "comment_count" in data[0]
+
+def test_get_video_stats(client):
+    create_response = client.post("/videos/", json={
+        "title": "Stats Video",
+        "description": "Stats test",
+        "file_path": "/videos/stats.mp4",
+        "creator_id": 1
+    })
+
+    video_id = create_response.get_json()["id"]
+
+    client.post("/social/comments", json={
+        "content": "Nice stats",
+        "user_id": 1,
+        "video_id": video_id
+    })
+
+    client.post("/social/likes/toggle", json={
+        "user_id": 1,
+        "video_id": video_id
+    })
+
+    client.get(f"/videos/{video_id}")
+    client.get(f"/videos/{video_id}")
+
+    response = client.get(f"/videos/{video_id}/stats")
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["video_id"] == video_id
+    assert data["views"] == 2
+    assert data["likes"] == 1
+    assert data["comments"] == 1
+
+def test_get_creator_videos(client):
+    client.post("/videos/", json={
+        "title": "Creator Video 1",
+        "description": "One",
+        "file_path": "/videos/one.mp4",
+        "creator_id": 1
+    })
+
+    client.post("/videos/", json={
+        "title": "Creator Video 2",
+        "description": "Two",
+        "file_path": "/videos/two.mp4",
+        "creator_id": 1
+    })
+
+    response = client.get("/videos/creator/1")
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert isinstance(data, list)
+    assert len(data) >= 2

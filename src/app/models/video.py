@@ -43,4 +43,6 @@ class Video(db.Model):
             "views": self.views,
             "is_published": self.is_published,
             "created_at": self.created_at.isoformat(),
+            "comment_count": len(self.comments),
+            "like_count": len(self.likes),
         }

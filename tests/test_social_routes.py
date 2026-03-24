@@ -56,3 +56,81 @@ def test_subscribe(client):
     data = response.get_json()
     assert data["subscriber_id"] == 1
     assert data["creator_id"] == 2
+
+def test_get_comments_for_video(client):
+    create_video = client.post("/videos/", json={
+        "title": "Comment List Video",
+        "description": "Video for comment list",
+        "file_path": "/videos/comment-list.mp4",
+        "creator_id": 1
+    })
+
+    video_id = create_video.get_json()["id"]
+
+    client.post("/social/comments", json={
+        "content": "First comment",
+        "user_id": 1,
+        "video_id": video_id
+    })
+
+    response = client.get(f"/social/comments/{video_id}")
+    assert response.status_code == 200
+    data = response.get_json()
+    assert isinstance(data, list)
+    assert len(data) == 1
+    assert data[0]["content"] == "First comment"
+
+
+def test_add_comment_invalid_video(client):
+    response = client.post("/social/comments", json={
+        "content": "Bad comment",
+        "user_id": 1,
+        "video_id": 999
+    })
+
+    assert response.status_code == 404
+    assert response.get_json()["error"] == "Video not found"
+
+
+def test_toggle_like_invalid_user(client):
+    create_video = client.post("/videos/", json={
+        "title": "Like Validation Video",
+        "description": "Video for validation",
+        "file_path": "/videos/like-validation.mp4",
+        "creator_id": 1
+    })
+
+    video_id = create_video.get_json()["id"]
+
+    response = client.post("/social/likes/toggle", json={
+        "user_id": 999,
+        "video_id": video_id
+    })
+
+    assert response.status_code == 404
+    assert response.get_json()["error"] == "User not found"
+
+
+def test_subscribe_to_self_fails(client):
+    response = client.post("/social/subscribe", json={
+        "subscriber_id": 1,
+        "creator_id": 1
+    })
+
+    assert response.status_code == 400
+    assert response.get_json()["error"] == "Users cannot subscribe to themselves"
+
+def test_get_user_subscriptions(client):
+    client.post("/social/subscribe", json={
+        "subscriber_id": 1,
+        "creator_id": 2
+    })
+
+    response = client.get("/users/1/subscriptions")
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert isinstance(data, list)
+    assert len(data) == 1
+    assert data[0]["subscriber_id"] == 1
+    assert data[0]["creator_id"] == 2

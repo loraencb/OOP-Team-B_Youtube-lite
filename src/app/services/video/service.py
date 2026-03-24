@@ -1,10 +1,15 @@
 from ...extensions import db
 from ...models.video import Video
+from ...models.user import User
 
 
 class VideoService:
     @staticmethod
     def create_video(title, description, file_path, creator_id, thumbnail_path=None):
+        user = db.session.get(User, creator_id)
+        if not user:
+            return None, "Creator not found"
+
         video = Video(
             title=title,
             description=description,
@@ -14,7 +19,7 @@ class VideoService:
         )
         db.session.add(video)
         db.session.commit()
-        return video
+        return video, None
 
     @staticmethod
     def get_all_videos():
@@ -23,6 +28,15 @@ class VideoService:
     @staticmethod
     def get_video_by_id(video_id):
         return db.session.get(Video, video_id)
+
+    @staticmethod
+    def get_videos_by_creator(user_id):
+        user = db.session.get(User, user_id)
+        if not user:
+            return None, "User not found"
+
+        videos = Video.query.filter_by(creator_id=user_id).order_by(Video.created_at.desc()).all()
+        return videos, None
 
     @staticmethod
     def increment_views(video):

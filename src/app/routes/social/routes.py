@@ -13,13 +13,26 @@ def add_comment():
     if missing:
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
 
-    comment = SocialService.add_comment(
+    comment, error = SocialService.add_comment(
         content=data["content"],
         user_id=data["user_id"],
         video_id=data["video_id"],
     )
 
+    if error:
+        return jsonify({"error": error}), 404
+
     return jsonify(comment.to_dict()), 201
+
+
+@social_bp.route("/comments/<int:video_id>", methods=["GET"])
+def get_comments(video_id):
+    comments, error = SocialService.get_comments_by_video(video_id)
+
+    if error:
+        return jsonify({"error": error}), 404
+
+    return jsonify([comment.to_dict() for comment in comments]), 200
 
 
 @social_bp.route("/likes/toggle", methods=["POST"])
@@ -31,10 +44,14 @@ def toggle_like():
     if missing:
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
 
-    result = SocialService.toggle_like(
+    result, error = SocialService.toggle_like(
         user_id=data["user_id"],
         video_id=data["video_id"],
     )
+
+    if error:
+        return jsonify({"error": error}), 404
+
     return jsonify(result), 200
 
 
@@ -47,10 +64,13 @@ def subscribe():
     if missing:
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
 
-    subscription = SocialService.subscribe(
+    subscription, error = SocialService.subscribe(
         subscriber_id=data["subscriber_id"],
         creator_id=data["creator_id"],
     )
+
+    if error:
+        return jsonify({"error": error}), 400
 
     return jsonify({
         "id": subscription.id,

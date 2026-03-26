@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_user, logout_user, current_user
-from ...extensions import db
-from ...models.user import User
+from ...services.auth.service import AuthService
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -12,27 +11,17 @@ def register():
 
     required_fields = ["username", "email", "password"]
     missing = [field for field in required_fields if field not in data]
-
     if missing:
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
 
-    existing_username = User.query.filter_by(username=data["username"]).first()
-    if existing_username:
-        return jsonify({"error": "Username already exists"}), 400
-
-    existing_email = User.query.filter_by(email=data["email"]).first()
-    if existing_email:
-        return jsonify({"error": "Email already exists"}), 400
-
-    user = User(
+    user, error = AuthService.register(
         username=data["username"],
         email=data["email"],
-        password_hash=""
+        password=data["password"],
+        role=data.get("role", "viewer"),
     )
-    user.set_password(data["password"])
-
-    db.session.add(user)
-    db.session.commit()
+    if error:
+        return jsonify({"error": error}), 400
 
     return jsonify({
         "message": "User registered successfully",
@@ -46,16 +35,14 @@ def login():
 
     required_fields = ["email", "password"]
     missing = [field for field in required_fields if field not in data]
-
     if missing:
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
 
-    user = User.query.filter_by(email=data["email"]).first()
-    if not user or not user.check_password(data["password"]):
-        return jsonify({"error": "Invalid email or password"}), 401
+    user, error = AuthService.login(data["email"], data["password"])
+    if error:
+        return jsonify({"error": error}), 401
 
     login_user(user)
-
     return jsonify({
         "message": "Login successful",
         "user": user.to_dict()

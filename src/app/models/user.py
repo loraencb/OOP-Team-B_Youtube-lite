@@ -10,6 +10,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
+    role = db.Column(db.String(20), nullable=False, default="viewer")
 
     videos = db.relationship("Video", backref="creator", lazy=True)
 
@@ -24,4 +25,5 @@ class User(UserMixin, db.Model):
             "id": self.id,
             "username": self.username,
             "email": self.email,
+            "role": self.role,
         }

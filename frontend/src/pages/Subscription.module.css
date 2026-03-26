@@ -1,0 +1,59 @@
+.page { max-width: 1000px; margin: 0 auto; }
+
+.header { text-align: center; margin-bottom: var(--space-3xl); }
+.heading { font-size: var(--font-size-4xl); color: var(--color-text-light); margin: var(--space-md) 0 var(--space-sm); }
+.subheading { color: var(--color-text-muted); font-size: var(--font-size-lg); margin: 0; }
+
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.tierCard {
+  position: relative;
+  background-color: var(--color-bg-secondary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.tierCardPopular {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary), var(--shadow-lg);
+}
+
+.popularBadge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 2px var(--space-md);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.tierHeader { text-align: center; }
+.tierName { font-size: var(--font-size-xl); color: var(--color-text-light); margin-bottom: var(--space-sm); }
+.tierPrice { display: flex; align-items: baseline; justify-content: center; gap: 4px; }
+.tierFree { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); color: var(--color-tier-free); }
+.tierAmount { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); color: var(--color-text-light); }
+.tierPeriod { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+
+.featureList { display: flex; flex-direction: column; gap: var(--space-sm); flex: 1; }
+.featureItem { display: flex; align-items: flex-start; gap: var(--space-sm); font-size: var(--font-size-sm); color: var(--color-text-light); }
+.featureLimit { color: var(--color-text-muted); }
+.checkIcon { color: var(--color-success); font-weight: bold; flex-shrink: 0; }
+.crossIcon { color: var(--color-text-muted); flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .tiers { grid-template-columns: 1fr; }
+}

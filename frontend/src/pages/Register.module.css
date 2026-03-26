@@ -1,0 +1,205 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-dark);
+  padding: var(--space-lg) var(--space-md);
+  background-image:
+    radial-gradient(ellipse at 80% 60%, rgba(186, 25, 11, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 30%, rgba(46, 196, 182, 0.05) 0%, transparent 40%);
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  box-shadow: var(--shadow-xl);
+  animation: slideUp var(--transition-normal);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  margin-bottom: var(--space-xl);
+  width: fit-content;
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+}
+
+.logoText {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  color: var(--color-text-light);
+}
+
+.heading {
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xs);
+}
+
+.subheading {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+.serverError { margin-bottom: var(--space-lg); }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Role selection */
+.roleFieldset {
+  border: none;
+  padding: 0;
+}
+
+.roleLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.roleOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.roleOption {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-bg-elevated);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.roleOption:hover {
+  border-color: var(--color-text-muted);
+}
+
+.roleOptionSelected {
+  border-color: var(--color-primary);
+  background-color: rgba(186, 25, 11, 0.08);
+}
+
+.radioInput {
+  /* visually hidden, but accessible */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.roleIcon {
+  font-size: var(--font-size-xl);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.roleTitle {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-light);
+  margin-bottom: 2px;
+}
+
+.roleDesc {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-normal);
+}
+
+/* Terms */
+.termsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  line-height: var(--line-height-relaxed);
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.termsLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+.termsLink:hover { color: var(--color-primary-hover); }
+
+.termError {
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  margin: 0;
+}
+
+/* Footer */
+.switchText {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xl);
+  margin-bottom: 0;
+}
+
+.switchLink {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+.switchLink:hover { color: var(--color-primary-hover); }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

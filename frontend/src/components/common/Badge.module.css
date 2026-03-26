@@ -1,0 +1,60 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* Sizes */
+.sm { font-size: var(--font-size-xs); padding: 2px var(--space-sm); }
+.md { font-size: var(--font-size-sm); padding: var(--space-xs) var(--space-md); }
+
+/* Variants */
+.default {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-muted);
+}
+
+.primary {
+  background-color: rgba(186, 25, 11, 0.2);
+  color: var(--color-primary-light);
+}
+
+.success {
+  background-color: rgba(6, 214, 160, 0.15);
+  color: var(--color-success);
+}
+
+.warning {
+  background-color: rgba(255, 159, 28, 0.15);
+  color: var(--color-warning);
+}
+
+.error {
+  background-color: rgba(186, 25, 11, 0.15);
+  color: #FF8080;
+}
+
+.info {
+  background-color: rgba(46, 196, 182, 0.15);
+  color: var(--color-info);
+}
+
+/* Subscription tier badges */
+.tier_free {
+  background-color: rgba(160, 160, 160, 0.15);
+  color: var(--color-tier-free);
+}
+
+.tier_mid {
+  background-color: rgba(46, 196, 182, 0.15);
+  color: var(--color-tier-mid);
+}
+
+.tier_premium {
+  background-color: rgba(255, 215, 0, 0.15);
+  color: var(--color-tier-premium);
+}

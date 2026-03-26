@@ -46,3 +46,15 @@ instance/
 # Temporary files
 *.tmp
 *.swp
+
+# Node / Frontend
+node_modules/
+package-lock.json
+yarn.lock
+.npm
+.next/
+out/
+build/
+dist/
+.cache/
+coverage/

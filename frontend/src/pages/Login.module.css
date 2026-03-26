@@ -1,0 +1,113 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-dark);
+  padding: var(--space-md);
+  /* Subtle gradient for visual interest */
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(186, 25, 11, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(46, 196, 182, 0.05) 0%, transparent 40%);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  box-shadow: var(--shadow-xl);
+  animation: slideUp var(--transition-normal);
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  margin-bottom: var(--space-xl);
+  width: fit-content;
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+}
+
+.logoText {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  color: var(--color-text-light);
+}
+
+.heading {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xs);
+}
+
+.subheading {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+.serverError {
+  margin-bottom: var(--space-lg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.passwordWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.forgotLink {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: color var(--transition-fast);
+}
+.forgotLink:hover { color: var(--color-primary); }
+
+.switchText {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xl);
+  margin-bottom: 0;
+}
+
+.switchLink {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.switchLink:hover { color: var(--color-primary-hover); }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

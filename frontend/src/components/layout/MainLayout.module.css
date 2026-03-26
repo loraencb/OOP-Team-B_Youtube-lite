@@ -1,0 +1,25 @@
+.layout {
+  min-height: 100vh;
+  background-color: var(--color-bg-dark);
+}
+
+.main {
+  margin-top: var(--navbar-height);
+  margin-left: var(--sidebar-width);
+  min-height: calc(100vh - var(--navbar-height));
+  padding: var(--space-xl);
+  transition: margin-left var(--transition-normal);
+  outline: none; /* no focus ring on skip-link target */
+}
+
+.mainExpanded {
+  margin-left: var(--sidebar-width-collapsed);
+}
+
+@media (max-width: 768px) {
+  .main,
+  .mainExpanded {
+    margin-left: 0;
+    padding: var(--space-md);
+  }
+}

@@ -1,0 +1,45 @@
+.avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--color-bg-elevated);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.initials {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-light);
+  line-height: 1;
+  user-select: none;
+}
+
+/* Sizes */
+.xs  { width: 24px; height: 24px; }
+.xs .initials  { font-size: 10px; }
+
+.sm  { width: 32px; height: 32px; }
+.sm .initials  { font-size: 12px; }
+
+.md  { width: 40px; height: 40px; }
+.md .initials  { font-size: 14px; }
+
+.lg  { width: 56px; height: 56px; }
+.lg .initials  { font-size: 18px; }
+
+.xl  { width: 80px; height: 80px; }
+.xl .initials  { font-size: 24px; }
+
+/* Tier rings */
+.tier_mid     { border-color: var(--color-tier-mid);     border-width: 2px; }
+.tier_premium { border-color: var(--color-tier-premium); border-width: 2px; box-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }

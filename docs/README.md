@@ -1,4 +1,4 @@
-# OOP-Team-B_Youtube-lite
+# HowToob
 A lightweight YouTube-style application built as an OOP team project.
 
 ## System Architecture

@@ -8,7 +8,7 @@ from ...models.video import Video
 
 class SocialService:
     @staticmethod
-    def add_comment(content, user_id, video_id):
+    def add_comment(content, user_id, video_id, parent_id=None):
         user = db.session.get(User, user_id)
         if not user:
             return None, "User not found"
@@ -17,7 +17,19 @@ class SocialService:
         if not video:
             return None, "Video not found"
 
-        comment = Comment(content=content, user_id=user_id, video_id=video_id)
+        if parent_id is not None:
+            parent_comment = db.session.get(Comment, parent_id)
+            if not parent_comment:
+                return None, "Parent comment not found"
+            if parent_comment.video_id != video_id:
+                return None, "Reply must belong to the same video"
+
+        comment = Comment(
+            content=content,
+            user_id=user_id,
+            video_id=video_id,
+            parent_id=parent_id,
+        )
         db.session.add(comment)
         db.session.commit()
         return comment, None
@@ -28,7 +40,7 @@ class SocialService:
         if not video:
             return None, "Video not found"
 
-        comments = Comment.query.filter_by(video_id=video_id).order_by(Comment.created_at.desc()).all()
+        comments = Comment.query.filter_by(video_id=video_id).order_by(Comment.created_at.asc()).all()
         return comments, None
 
     @staticmethod
@@ -106,11 +118,3 @@ class SocialService:
         subscriptions = Subscription.query.filter_by(subscriber_id=user_id).all()
         return subscriptions, None
     
-    @staticmethod
-    def get_comments_by_video(video_id):
-        video = db.session.get(Video, video_id)
-        if not video:
-            return None, "Video not found"
-
-        comments = Comment.query.filter_by(video_id=video_id).order_by(Comment.created_at.desc()).all()
-        return comments, None

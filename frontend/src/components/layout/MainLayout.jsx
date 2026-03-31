@@ -35,7 +35,7 @@ export default function MainLayout() {
 
   return (
     <div className={styles.layout}>
-      <Navbar onToggleSidebar={handleToggle} />
+      <Navbar onToggleSidebar={handleToggle} isOpen={!sidebarCollapsed} />
 
       <Sidebar isCollapsed={sidebarCollapsed} onClose={handleCloseSidebar} />
 

@@ -1,7 +1,4 @@
-// Phase 5 - Quiz taking page
-// TODO: TEAM DECISION NEEDED
-// Quiz generation service: OpenAI GPT-4, Anthropic Claude, or custom?
-// For now: mock quiz data, fully functional quiz-taking experience
+// This page uses mock quiz data for now.
 
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -11,7 +8,7 @@ import Badge from '../components/common/Badge'
 import { QUIZ_PASS_SCORE } from '../utils/constants'
 import styles from './Quiz.module.css'
 
-// Mock quiz data - replace with API call to quiz generation service
+// Replace this with real quiz data later.
 const MOCK_QUIZ = [
   {
     id: 1,
@@ -108,7 +105,7 @@ export default function Quiz() {
   return (
     <div className={styles.page}>
       <div className={styles.quizCard}>
-        {/* Progress indicator */}
+        {/* Quiz progress */}
         <div className={styles.progress}>
           <span className={styles.progressText}>Question {currentIdx + 1} of {questions.length}</span>
           <div className={styles.progressBar}>

@@ -20,6 +20,7 @@ const Profile        = lazy(() => import('./pages/Profile'))
 const Search         = lazy(() => import('./pages/Search'))
 const Playlist       = lazy(() => import('./pages/Playlist'))
 const MyPlaylists    = lazy(() => import('./pages/MyPlaylists'))
+const WatchHistory   = lazy(() => import('./pages/WatchHistory'))
 const Settings       = lazy(() => import('./pages/Settings'))
 const Subscription   = lazy(() => import('./pages/Subscription'))
 const Quiz           = lazy(() => import('./pages/Quiz'))
@@ -77,6 +78,9 @@ export default function App() {
                 } />
                 <Route path="/my-playlists" element={
                   <ProtectedRoute><MyPlaylists /></ProtectedRoute>
+                } />
+                <Route path="/history" element={
+                  <ProtectedRoute><WatchHistory /></ProtectedRoute>
                 } />
                 <Route path="/settings" element={
                   <ProtectedRoute><Settings /></ProtectedRoute>

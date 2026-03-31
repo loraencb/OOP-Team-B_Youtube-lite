@@ -93,8 +93,8 @@ export const socialAPI = {
   getComments: (videoId) =>
     request('GET', `/social/comments/${videoId}`),
 
-  addComment: (videoId, content) =>
-    request('POST', '/social/comments', { video_id: videoId, content }),
+  addComment: (videoId, content, parentId = null) =>
+    request('POST', '/social/comments', { video_id: videoId, content, parent_id: parentId }),
 
   toggleLike: (videoId) =>
     request('POST', '/social/likes/toggle', { video_id: videoId }),

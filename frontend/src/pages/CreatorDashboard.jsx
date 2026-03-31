@@ -22,13 +22,8 @@ ChartJS.register(
   Legend
 )
 
-/**
- * Creator Dashboard with analytics:
- * - Line chart for views over last 7 days
- * - Bar chart for subscribers gained over last 30 days
- */
 export default function CreatorDashboard() {
-  // Mock data for 7 days of views
+  // Temporary chart data for views.
   const viewsChartData = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
@@ -49,7 +44,7 @@ export default function CreatorDashboard() {
     ]
   }
 
-  // Mock data for 30 days of subscriber gains
+  // Temporary chart data for subscribers.
   const subsChartData = {
     labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
     datasets: [

@@ -19,6 +19,7 @@ def add_comment():
         content=data["content"],
         user_id=current_user.id,
         video_id=data["video_id"],
+        parent_id=data.get("parent_id"),
     )
 
     if error:

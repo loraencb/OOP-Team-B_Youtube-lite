@@ -67,6 +67,18 @@ export function formatRelativeTime(dateString) {
 }
 
 /**
+ * Format a date string into a numeric date (e.g. "3/31/26")
+ */
+export function formatNumericDate(dateString) {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  const m = date.getMonth() + 1
+  const d = date.getDate()
+  const y = String(date.getFullYear()).slice(-2)
+  return `${m}/${d}/${y}`
+}
+
+/**
  * Format a date string to a short readable date (e.g. "Mar 26, 2026")
  */
 export function formatDate(dateString) {

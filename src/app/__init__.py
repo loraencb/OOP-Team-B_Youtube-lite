@@ -1,7 +1,18 @@
 from flask import Flask, jsonify
 from flask_login import current_user
+from sqlalchemy import inspect, text
 from .config import Config
 from .extensions import db, login_manager
+
+
+def ensure_schema_updates():
+    inspector = inspect(db.engine)
+
+    if "comments" in inspector.get_table_names():
+        comment_columns = {column["name"] for column in inspector.get_columns("comments")}
+        if "parent_id" not in comment_columns:
+            db.session.execute(text("ALTER TABLE comments ADD COLUMN parent_id INTEGER"))
+            db.session.commit()
 
 
 def create_app():
@@ -32,6 +43,7 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        ensure_schema_updates()
 
     @app.route("/")
     def home():

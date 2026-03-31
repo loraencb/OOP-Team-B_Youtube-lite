@@ -1,7 +1,7 @@
-// ═══ API ═══
+// API
 export const API_BASE_URL = '/api'
 
-// ═══ SUBSCRIPTION TIERS ═══
+// Subscription tiers
 export const TIERS = {
   FREE: 'free',
   MID: 'mid',
@@ -59,16 +59,16 @@ export const TIER_FEATURES = {
   },
 }
 
-// ═══ USER ROLES ═══
+// User roles
 export const ROLES = {
   VIEWER: 'viewer',
   CREATOR: 'creator',
   ADMIN: 'admin',
 }
 
-// ═══ SKILL-PATH CATEGORIES (TWO-TIER) ═══
+// Two-level category filter data
 export const PRIMARY_CATEGORIES = [
-  { value: 'technology', label: 'Technology' },
+  { value: 'technology', label: 'Computer Science' },
   { value: 'science', label: 'Science' },
   { value: 'fitness', label: 'Fitness' },
   { value: 'business', label: 'Business' },
@@ -108,9 +108,9 @@ export const SUB_CATEGORIES = {
   ],
 }
 
-// Legacy flat categories for API compatibility
+// Flat category list used by older parts of the app
 export const CATEGORIES = [
-  { value: 'technology', label: 'Technology' },
+  { value: 'technology', label: 'Computer Science' },
   { value: 'science', label: 'Science' },
   { value: 'arts', label: 'Arts & Crafts' },
   { value: 'cooking', label: 'Cooking' },
@@ -124,23 +124,20 @@ export const CATEGORIES = [
   { value: 'writing', label: 'Writing' },
 ]
 
-// ═══ PAGINATION ═══
+// Pagination
 export const PAGE_SIZE = 12
 
-// ═══ DEBOUNCE ═══
+// Search timing
 export const SEARCH_DEBOUNCE_MS = 300
 
-// ═══ VIDEO PLAYER ═══
-export const PROGRESS_SAVE_INTERVAL_MS = 5000   // save progress every 5s
-export const COMPLETION_THRESHOLD = 0.9          // 90% watched = "completed"
+// Video player
+export const PROGRESS_SAVE_INTERVAL_MS = 5000 // Save progress every 5 seconds.
+export const COMPLETION_THRESHOLD = 0.9 // Mark a video complete after 90% is watched.
 
-// ═══ QUIZ ═══
-// TODO: TEAM DECISION NEEDED
-// Quiz generation service: OpenAI GPT-4, Anthropic Claude, or custom?
-// For now using mock quiz data structure
-export const QUIZ_PASS_SCORE = 70  // 70% to pass
+// Quiz
+export const QUIZ_PASS_SCORE = 70 // Minimum passing score.
 
-// ═══ LOCAL STORAGE KEYS ═══
+// Local storage keys
 export const STORAGE_KEYS = {
   SIDEBAR_COLLAPSED: 'howtoob_sidebar_collapsed',
   THEME: 'howtoob_theme',

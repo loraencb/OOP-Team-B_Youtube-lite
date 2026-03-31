@@ -7,7 +7,6 @@ import styles from './Sidebar.module.css'
 // SVG icon helpers
 const Icon = {
   Home: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
-  Trending: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>,
   Subscriptions: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.894L15 14"/><rect x="1" y="6" width="15" height="12" rx="2"/></svg>,
   Dashboard: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>,
   History: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.02"/></svg>,
@@ -51,16 +50,10 @@ export default function Sidebar({ isCollapsed, onClose }) {
               <span className={styles.navIcon}><Icon.Home /></span>
               {!isCollapsed && <span className={styles.navText}>Home</span>}
             </NavLink>
-
-            <NavLink to="/trending" className={navItemClass}>
-              <span className={styles.navIcon}><Icon.Trending /></span>
-              {!isCollapsed && <span className={styles.navText}>Trending</span>}
-            </NavLink>
           </div>
 
-          {/* My Learning (logged in) */}
-          {isAuthenticated && (
-            <div className={styles.section}>
+          {/* My Learning */}
+          <div className={styles.section}>
               {!isCollapsed && <p className={styles.sectionLabel}>My Learning</p>}
 
               <NavLink to="/dashboard" className={navItemClass}>
@@ -68,7 +61,7 @@ export default function Sidebar({ isCollapsed, onClose }) {
                 {!isCollapsed && <span className={styles.navText}>My Dashboard</span>}
               </NavLink>
 
-              <NavLink to="/subscriptions" className={navItemClass}>
+              <NavLink to="/subscription" className={navItemClass}>
                 <span className={styles.navIcon}><Icon.Subscriptions /></span>
                 {!isCollapsed && <span className={styles.navText}>Subscriptions</span>}
               </NavLink>
@@ -83,11 +76,8 @@ export default function Sidebar({ isCollapsed, onClose }) {
                 {!isCollapsed && <span className={styles.navText}>My Playlists</span>}
               </NavLink>
             </div>
-          )}
-
-          {/* Creator (creator role only) */}
-          {isCreator && (
-            <div className={styles.section}>
+          {/* Creator */}
+          <div className={styles.section}>
               {!isCollapsed && <p className={styles.sectionLabel}>Creator</p>}
 
               <NavLink to="/creator-dashboard" className={navItemClass}>
@@ -95,8 +85,6 @@ export default function Sidebar({ isCollapsed, onClose }) {
                 {!isCollapsed && <span className={styles.navText}>Creator Studio</span>}
               </NavLink>
             </div>
-          )}
-
           {/* Browse */}
           <div className={styles.section}>
             {!isCollapsed && <p className={styles.sectionLabel}>Browse</p>}
@@ -138,8 +126,7 @@ export default function Sidebar({ isCollapsed, onClose }) {
           </div>
 
           {/* Account */}
-          {isAuthenticated && (
-            <div className={styles.section}>
+          <div className={styles.section}>
               {!isCollapsed && <p className={styles.sectionLabel}>Account</p>}
 
               <NavLink to="/settings" className={navItemClass}>
@@ -147,7 +134,6 @@ export default function Sidebar({ isCollapsed, onClose }) {
                 {!isCollapsed && <span className={styles.navText}>Settings</span>}
               </NavLink>
             </div>
-          )}
         </nav>
       </aside>
     </>

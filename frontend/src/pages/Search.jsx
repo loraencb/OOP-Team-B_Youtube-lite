@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { videosAPI } from '../utils/api'
-import { formatViewCount, formatRelativeTime, truncate } from '../utils/formatters'
+import { formatViewCount, formatNumericDate, truncate } from '../utils/formatters'
 import { Link } from 'react-router-dom'
 import LoadingSpinner from '../components/common/LoadingSpinner'
 import ErrorMessage from '../components/common/ErrorMessage'
@@ -44,14 +44,24 @@ export default function Search() {
             {videos.map(v => (
               <article key={v.id} className={styles.resultItem}>
                 <Link to={`/watch/${v.id}`} className={styles.thumb}>
-                  <div className={styles.thumbInner} />
+                  <div className={styles.thumbInner}>
+                    {v.thumbnail_url ? (
+                      <img
+                        src={v.thumbnail_url}
+                        alt={`Thumbnail for ${v.title}`}
+                        className={styles.thumbImage}
+                      />
+                    ) : (
+                      <div className={styles.thumbPlaceholder} aria-hidden="true" />
+                    )}
+                  </div>
                 </Link>
                 <div className={styles.info}>
                   <Link to={`/watch/${v.id}`} className={styles.title}>
                     {truncate(v.title, 80)}
                   </Link>
                   <p className={styles.meta}>
-                    {formatViewCount(v.views)} views · {formatRelativeTime(v.created_at)}
+                    {formatViewCount(v.views)} views · {formatNumericDate(v.created_at)}
                   </p>
                   {v.description && (
                     <p className={styles.desc}>{truncate(v.description, 120)}</p>

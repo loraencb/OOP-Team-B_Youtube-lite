@@ -194,3 +194,25 @@
 .metaDot {
   opacity: 0.5;
 }
+
+/* Text Only Layout Modifier */
+.textOnlyCard {
+  background-color: var(--color-bg-elevated);
+  border: 1px solid rgba(186, 25, 11, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.textOnlyCard:hover {
+  border-color: rgba(186, 25, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(186, 25, 11, 0.1);
+}
+
+.cardInfoTextOnly {
+  align-items: center;
+  text-align: center;
+}

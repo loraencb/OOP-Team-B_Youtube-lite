@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext'
 import Avatar from './Avatar'
 import styles from './Navbar.module.css'
 
-export default function Navbar({ onToggleSidebar }) {
+export default function Navbar({ onToggleSidebar, isOpen }) {
   const { user, isAuthenticated, isCreator, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -42,9 +42,9 @@ export default function Navbar({ onToggleSidebar }) {
       {/* Left: hamburger + logo */}
       <div className={styles.left}>
         <button
-          className={styles.hamburger}
+          className={`${styles.hamburger} ${isOpen ? styles.hamburgerOpen : ''}`}
           onClick={onToggleSidebar}
-          aria-label="Toggle sidebar navigation"
+          aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
           type="button"
         >
           <span className={styles.hamburgerLine} />
